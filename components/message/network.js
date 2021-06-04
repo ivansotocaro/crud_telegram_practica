@@ -9,21 +9,31 @@ const router = express.Router();
 //  Aqui estan todas nuestras rutas a la cual se redireciona por el Middleware
 // que tengo en el archivo Server.js
 router.get("/", function (req, res) {
-  console.log(req.headers);
-  res.header({
-    "custom-header": "Nuestro valor personalizafo",
-  });
-  response.success(req, res, "Lista de mensaje");
+  controller
+    .getMessage()
+    .then((result) => {
+      response.success(req, res, result, 200);
+    })
+    .catch((err) => {
+      response.error(req, res, err, 400, "ALgo salio mal internamente");
+    });
 });
 
 router.post("/", function (req, res) {
-  controller.addMessage(req.body.user, req.body.message);
-
-  if (req.query.error == "ok") {
-    response.error(req, res, "Error ", 400, "Es solo una simulacion");
-  } else {
-    response.success(req, res, "Se ha creado correctamente", 201);
-  }
+  controller
+    .addMessage(req.body.user, req.body.message)
+    .then((fullMessage) => {
+      response.success(req, res, fullMessage, 201);
+    })
+    .catch((err) => {
+      response.error(
+        req,
+        res,
+        "informacion no valida",
+        400,
+        "Error en el controlador"
+      );
+    });
 });
 
 router.delete("/", function (req, res) {
