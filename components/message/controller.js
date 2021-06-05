@@ -22,13 +22,43 @@ function addMessage(user, message) {
   });
 }
 
-function getMessage() {
+function getMessage(filterUser) {
   return new Promise((resolve, reject) => {
-    resolve(store.list());
+    resolve(store.list(filterUser));
+  });
+}
+
+function updateMessage(id, message) {
+  return new Promise(async (resolve, reject) => {
+    if (!id || !message) {
+      reject("Dato invalido");
+    } else {
+      const result = await store.updateText(id, message);
+      resolve(result);
+    }
+  });
+}
+
+function deleteMessage(id) {
+  return new Promise((resolve, reject) => {
+    if (!id) {
+      reject("id invalido");
+    } else {
+      store
+        .remove(id)
+        .then(() => {
+          resolve("Todo esta bien");
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    }
   });
 }
 
 module.exports = {
   addMessage,
   getMessage,
+  updateMessage,
+  deleteMessage,
 };
