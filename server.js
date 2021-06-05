@@ -1,6 +1,12 @@
 const express = require("express");
 
+const db = require("./db");
+
 const router = require("./network/routers");
+
+db(
+  "mongodb+srv://db_user_telegram:tqaDYi20gzQEfPDe@cluster0.50ia3.mongodb.net/telegram?retryWrites=true&w=majority"
+);
 
 // Inicializar express
 const app = express();

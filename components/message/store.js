@@ -1,19 +1,4 @@
-const db = require("mongoose");
 const Model = require("./model");
-
-// Connexion con la base de datos
-db.Promise = global.Promise;
-// mongodb+srv://db_user_telegram:tqaDYi20gzQEfPDe@cluster0.50ia3.mongodb.net/telegram?retryWrites=true&w=majority
-db.connect(
-  "mongodb+srv://db_user_telegram:tqaDYi20gzQEfPDe@cluster0.50ia3.mongodb.net/telegram?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    dbName: "telegram",
-  }
-)
-  .then(() => console.log("[db] Conectada con éxito"))
-  .catch((err) => console.error("[db]", err));
 
 // Guargar los datos
 function addMessage(textMessage) {
